@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "scss-class-project"
+    }
+  },
+  "defaultProject": "scss-class-project",
+  "cli": {
+    "analytics": "c0d807c6-97d2-451a-bebe-3d96a61c865f"
+  }
 }

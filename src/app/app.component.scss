@@ -1,0 +1,174 @@
+*,
+*::after,
+*::before{
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0,255,20,.1);
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%; //This percentage is being calculated off the user defined font setting (e.g. 16px by default). Don't want to hard code because then we would prevent the user from being able to change the font size.
+}
+
+body {
+  box-sizing: border-box;
+}
+
+$color-primary: green;
+$color-secondary: orange;
+$color-tertiary: pink;
+$color-text-dark: $color-primary;
+$button-color: rgb(0,0,200);
+$button-text-color: rgb(255,255,255);
+
+@mixin clearfix {
+  &::after {
+    content: "";
+    clear: both;
+    display: table
+  }
+}
+
+@mixin text-color($color) {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: $color;
+}
+
+@function divideByTwo($a, $b) {
+  @return $a / $b;
+}
+
+nav {
+  margin: divideByTwo(6, 2) * 1rem;
+  background-color: $color-tertiary;
+
+  @include clearfix;
+}
+
+.navigation {
+  list-style: none;
+  float: left;
+  li {
+    display: inline-block;
+    margin-left: 3rem;
+
+    &:first-child {
+      margin: 0;
+    }
+
+    a {
+      @include text-color($color-text-dark);
+      &::after {
+       content: "→"
+      }
+    }
+  }
+}
+
+
+@keyframes dance {
+  0% {
+    transform: translateX(50rem) rotate(-30deg);
+  }
+  25% {
+    transform: translateX(40rem) translateY(15rem) rotate(90deg);
+  }
+  50% {
+    transform: translateX(25rem) translateY(25rem) rotate(180deg);
+  }
+  75% {
+    transform: translateX(10rem) translateY(15rem) rotate(270deg);
+  }
+  100% {
+    transform: translate(0) rotate(390deg);
+  }
+}
+
+.buttons {
+  float: right;
+}
+
+%btn-placeholder {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1.5rem 4rem;
+  display: inline-block;
+  border-radius: 10rem;
+  transition: all .2s;
+  position: relative;
+  left: 10rem;
+  top: 10rem;
+}
+
+
+.btn {
+  font-size: 1.6rem;
+  &:link,
+  &:visited {
+    @extend %btn-placeholder;
+  }
+
+  &-main:link,
+  &-hot:link {
+    padding: 1rem;
+    display: inline-block;
+    text-align: center;
+    border-radius: 10rem;
+    text-decoration: none;
+  }
+
+  &-main {
+    &:link {
+      background-color: $color-primary;
+    }
+    &:hover {
+      background-color: lighten($color-primary, 50%);
+    }
+  }
+
+  &:hover {
+    background-color: rgba(0,0,0,0);
+    transform: translateY(-.5rem);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,.2);
+
+    &::after {
+      transform: scaleX(1.4) scaleY(1.6);
+    }
+  }
+
+
+  &:active {
+    transform: translateY(-1px);
+  }
+
+  &::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+    background-color: $button-color;
+    box-shadow: 0 2rem 1rem rgba(0,0,0,.2);
+  }
+  &--blue {
+    // background-color: $button-color;
+    color: $button-text-color;
+
+    &::after {
+      background-color: $button-color;
+    }
+
+  }
+
+  &--animated {
+    animation: dance 2s infinite alternate linear;
+    animation-fill-mode: backwards;
+  }
+}
